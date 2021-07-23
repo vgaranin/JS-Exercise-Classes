@@ -299,9 +299,7 @@ const john = new Student({
     name: "John",
     age: 21,
     location: "Los-Angeles",
-    previousBackground: 'some college degree',
-    className: 'SC333',
-    favSubjects: "JavaScript"
+
 });
 
 console.log(john.listSubjects("HTML"));
@@ -321,10 +319,44 @@ console.log(john.sprintChallenge("JavaScript"));
         + `standUp` a method that takes in a slack channel and returns `{name} announces to {channel}, @channel standy times!`
         + `debugsCode` a method that takes in a student object and a subject and returns `{name} debugs {student.name}'s code on {subject}`
 */
-class ProjectManager
+
+class ProjectManager extends Instructor
 {
+    constructor(args) 
+    {
+        super(args);
+
+        this.gradClassName = args.gradClassName;
+        this.favInstructor = args.favInstructor;
+    }
+
+    standUp(channel)
+    {
+        return `${this.name} announces to ${channel}, @channel standy times!`;
+    }
+
+    debugsCode(student, subject)
+    {
+        return `${this.name} debugs ${student.name}'s code on ${subject}`;
+    }
 
 }
+
+
+const silva = new ProjectManager
+    ({
+        name: "Silva",
+        age: 47,
+        location: "Los-Angeles",
+        gradClassName: "SC0001",
+        favInstructor: "Sean"
+
+    });
+
+console.log(silva.standUp("Slack"));
+console.log(silva.debugsCode("John", "CSS"));
+
+
 /*
   STRETCH PROBLEM (no tests!)
     - Extend the functionality of the Student by adding a prop called grade and setting it equal to a number between 1-100.
