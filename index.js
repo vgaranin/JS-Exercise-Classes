@@ -47,10 +47,10 @@ class Airplane
 
 class Person
 {
-    constructor(attributs)
+    constructor(attributes)
     {
-        this.name = attributs.name,
-            this.age = attributs.age,
+        this.name = attributes.name,
+            this.age = attributes.age,
             this.stomach = [];
     }
 
@@ -60,15 +60,15 @@ class Person
         {
             this.stomach.push(food);
         }
-    };
+    }
     poop()
     {
         this.stomach = [];
-    };
+    }
     toString()
     {
         return `${this.name}, ${this.age}`;
-    };
+    }
 
 }
 const mary = new Person(
@@ -105,8 +105,73 @@ console.log(mary.toString());
 
 class Car
 {
+    constructor(attributes)
+    {
+        this.model = attributes.model;
+        this.milesPerGallon = attributes.milesPerGallon;
+        this.tank = 0;
+        this.odometer = 0;
+    }
 
+    fillFuel(gallons)
+    {
+        this.tank = gallons;
+        if (this.tank === 0)
+        {
+            return `${this.model} has ${this.tank} gallon in tank, it is not enough to start! a car`;
+        }
+        else if (this.tank <= 10)
+        {
+            return `${this.model} has ${this.tank} gallon in tank, it's enough fuel to run up to 250 miles`;
+        }
+        else if (this.tank <= 18)
+        {
+            return `${this.model} has ${this.tank} gallon in tank,  it's enough fuel to run up to ${this.tank * 25} miles`;
+        }
+    }
+
+    drive(miles)
+    {
+        let usedFuel = (1 / 500) * miles;
+
+        this.odometer += miles;
+        this.tank = usedFuel;
+
+        let tankLevel = this.tank - usedFuel;
+        tankLevel = parseFloat(tankLevel.toFixed(3));
+
+        if (this.tank <= 0)
+        {
+            return `I ran out of fuel at ${this.odometer} miles;`;
+        }
+        else if (this.tank < 5)
+        {
+            return `In the tank ${tankLevel} gallons left, ! WARNING ! ${this.model} tank empty!`;
+        }
+        else if (this.tank < 10)
+        {
+            return `In the tank ${tankLevel} gallons left, you need ${this.model} tank fill soon!`;
+        }
+        else if (this.tank < 12)
+        {
+            return `In the tank ${tankLevel} gallons left, half of tank left `;
+        }
+        else
+        {
+            return `In the tank ${tankLevel} gallons left, 2/3 of tank left `;
+        }
+    }
 }
+
+const infinity = new Car
+    ({
+        model: "Infinity",
+        milesPerGallon: 25
+    });
+
+console.log(infinity);
+console.log(infinity.fillFuel(15));
+console.log(infinity.drive(350));
 
 /*
   TASK 3
@@ -122,7 +187,17 @@ class Car
 */
 class Lambdasian
 {
+    constructor(attributes)
+    {
+        this.name = attributes.name;
+        this.age = attributes.age;
+        this.location = attributes.location;
+    }
 
+    speak()
+    {
+        return `Hello my name is ${this.name}, I am from ${this.location}`;
+    }
 }
 
 /*
@@ -139,10 +214,43 @@ class Lambdasian
         + `demo` receives a `subject` string as an argument and returns the phrase 'Today we are learning about {subject}' where subject is the param passed in.
         + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
 */
-class Instructor
-{
 
+class Instructor extends Lambdasian
+{
+    constructor(instructorAttributes) 
+    {
+        super(instructorAttributes);
+
+        this.specialty = instructorAttributes.specialty;
+        this.favLanguage = instructorAttributes.favLanguage;
+        this.catchPhrase = instructorAttributes.catchPhrase;
+    }
+
+    demo(subject)
+    {
+        return `Today we are learning about ${subject}`;
+    }
+
+    grade(student, subject)
+    {
+        return `${student.name} receives a perfect score on ${subject}`;
+    }
 }
+
+const alex = new Instructor({
+    name: "Alex",
+    age: 45,
+    location: "Los-Angeles",
+    specialty: 'redux',
+    favLanguage: 'JavaScript',
+    catchPhrase: "Don't forget the homies"
+});
+
+console.log(alex.demo("coding"));
+console.log(alex.grade({ name: "Anna" }, "coding"));
+console.log(alex);
+
+
 /*
   TASK 5
     - Write a Student class extending Lambdasian.
